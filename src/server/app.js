@@ -10,6 +10,7 @@ const verifyUserId = require("./middlewares/verifyUserId");
 // Arquivos de Rota
 const auth = require("./routes/auth/index");
 const tasks = require("./routes/tasks/index");
+const user = require("./routes/user/index");
 
 const app = express();
 
@@ -56,6 +57,7 @@ mongoose
 
 app.use("/api/auth", auth);
 app.use("/manage", tasks);
+app.use("/user/private_info", user);
 
 app.listen(PORT, () => {
   console.log("Server started successfuly. http://localhost:" + PORT);

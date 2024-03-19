@@ -4,6 +4,7 @@ import { IoMdSearch } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { GrLogout } from "react-icons/gr";
 import { GoPlusCircle } from "react-icons/go";
+import { FaUser } from "react-icons/fa6";
 import { useAuth } from "../../hooks/useAuth";
 import TaskBalloon from "./TaskBaloon";
 import { MANAGE_TASK } from "../../api/basesURL";
@@ -86,6 +87,11 @@ const Home = () => {
         <button title="Sair" onClick={() => logout()}>
           <GrLogout />
         </button>
+        <Link to={"/profile"}>
+          <button>
+            <FaUser />
+          </button>
+        </Link>
       </div>
       <div className="title">
         <p className="fs-1 fw-bold">Tarefas:</p>

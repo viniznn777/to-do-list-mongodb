@@ -6,7 +6,7 @@ const generateToken = require("../../utils/generateToken");
 const verifyToken = require("../../middlewares/verifyToken");
 
 router.post("/register", async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, fname } = req.body;
 
   try {
     const existingUser = await User.findOne({ email: email });
@@ -19,6 +19,7 @@ router.post("/register", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const newUser = new User({
+      fname,
       email,
       password: hashedPassword,
     });
@@ -68,7 +69,7 @@ router.post("/login", async (req, res) => {
           console.log("Token cookie:", token);
           console.log("ID cookie:", user._id.toString());
 
-          return res.send();
+          return res.status(200).json({ fname: user.fname });
         } else {
           return res.status(400).json({ message: "Invalid credentials!" });
         }

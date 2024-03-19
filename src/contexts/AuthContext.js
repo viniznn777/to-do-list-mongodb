@@ -14,6 +14,14 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [fname, setFname] = useState("");
+
+  useEffect(() => {
+    if (!fname) {
+      const username = JSON.parse(localStorage.getItem("fname"));
+      setFname(username);
+    }
+  }, [fname]);
 
   useEffect(() => {
     const checkAuthStatus = async () => {
@@ -24,7 +32,6 @@ const AuthProvider = ({ children }) => {
 
         if (response.status === 200) {
           setIsAuthenticated(true);
-          console.clear();
         } else if (response.status === 401) {
           throw new Error("Você ainda não está Autenticado!");
         }
@@ -35,13 +42,15 @@ const AuthProvider = ({ children }) => {
     };
 
     checkAuthStatus();
-  }, []);
+  }, [isAuthenticated]);
 
   const register = async (
     event,
+    setFname,
     setEmail,
     setPassword,
     setPassword2,
+    fname,
     email,
     password,
     password2
@@ -49,7 +58,7 @@ const AuthProvider = ({ children }) => {
     event.preventDefault();
 
     try {
-      if (!email || !password || !password2) {
+      if (!email || !password || !password2 || !fname) {
         alertMessage("Todos os campos devem ser preenchidos!");
         return;
       } else if (password !== password2) {
@@ -58,6 +67,7 @@ const AuthProvider = ({ children }) => {
       }
 
       const body = {
+        fname,
         email,
         password,
       };
@@ -68,6 +78,7 @@ const AuthProvider = ({ children }) => {
       });
 
       if (response.status === 201) {
+        setFname("");
         setEmail("");
         setPassword("");
         setPassword2("");
@@ -103,9 +114,15 @@ const AuthProvider = ({ children }) => {
 
       if (response.status === 200) {
         setIsAuthenticated(true);
+        setFname(response.data.fname);
+        localStorage.setItem("fname", JSON.stringify(response.data.fname));
         navigate("/");
         successMessage("Sucesso ao entrar!");
         console.clear();
+        console.log(
+          "%c Atenção! Caso haja alguma alteração não autorizada neste painel (DevTools), por segurança será feito o logout do usuário!",
+          "background: rgba(248, 236, 26, 0.51); color: #fff; padding: 15px; font-weight: bold;"
+        );
       } else if (response.status === 400) {
         errorMessage("Email ou senha incorretos!");
         return;
@@ -131,10 +148,9 @@ const AuthProvider = ({ children }) => {
       if (response.status === 200) {
         document.cookie = `token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=${cookiePath};`;
         document.cookie = `id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=${cookiePath};`;
-
+        localStorage.removeItem("fname");
         setIsAuthenticated(false);
         navigate("/login");
-        console.clear();
       } else {
         console.error(
           "Houve um erro ao realizar o logout",
@@ -146,8 +162,22 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  window.addEventListener("storage", (e) => {
+    if (e.key === "fname" && e.newValue !== fname) {
+      // Verifica se o novo valor é diferente do valor atual de fname
+      logout();
+
+      console.info(
+        "%c Parece que houve uma alteração não autorizada no (Armazenamento Local). Para a sua segurança fizemos o logout da sua conta. Faça login novamente para acessá-la.",
+        "background: rgba(253, 20, 20, 0.8); color: #fff; padding: 15px; font-weight: bold;"
+      );
+    }
+  });
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, register, logout }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, login, register, logout, fname }}
+    >
       {children}
     </AuthContext.Provider>
   );

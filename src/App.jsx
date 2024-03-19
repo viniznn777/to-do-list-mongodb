@@ -11,6 +11,17 @@ import { PrivateRoute } from "./contexts/PrivateRoute";
 import Home from "./pages/Home";
 import NewTask from "./pages/NewTask";
 import Task from "./pages/Task";
+import Profile from "./pages/Profile";
+
+let messageLogged = false;
+
+if (!messageLogged) {
+  console.log(
+    "%c Atenção! Caso haja alguma alteração não autorizada neste painel (DevTools), por segurança será feito o logout do usuário!",
+    "background: rgba(248, 236, 26, 0.51); color: #fff; padding: 15px; font-weight: bold;"
+  );
+  messageLogged = true;
+}
 
 function App() {
   return (
@@ -34,6 +45,10 @@ function App() {
           <Route
             path="/see_details/:id"
             element={<PrivateRoute item={<Task />} />}
+          ></Route>
+          <Route
+            path="/profile"
+            element={<PrivateRoute item={<Profile />} />}
           ></Route>
         </Routes>
       </AuthProvider>
