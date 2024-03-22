@@ -12,6 +12,8 @@ import Home from "./pages/Home";
 import NewTask from "./pages/NewTask";
 import Task from "./pages/Task";
 import Profile from "./pages/Profile";
+import RedefineEmail from "./pages/Profile/pages/RedefineEmail";
+import DeleteAccount from "./pages/Profile/pages/DeleteAccount";
 
 let messageLogged = false;
 
@@ -49,6 +51,14 @@ function App() {
           <Route
             path="/profile"
             element={<PrivateRoute item={<Profile />} />}
+          ></Route>
+          <Route
+            path="/profile/change_email"
+            element={<PrivateRoute item={<RedefineEmail />} />}
+          ></Route>
+          <Route
+            path="/profile/delete_acc"
+            element={<PrivateRoute item={<DeleteAccount />} />}
           ></Route>
         </Routes>
       </AuthProvider>

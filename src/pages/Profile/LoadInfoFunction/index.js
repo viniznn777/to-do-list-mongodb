@@ -1,7 +1,7 @@
 const { MANAGE_USER } = require("../../../api/basesURL");
 const { errorMessage } = require("../../../utils/toastifyMessages");
 
-export const fetchData = async () => {
+export const fetchEmail = async () => {
   try {
     const response = await MANAGE_USER.get("/email", {
       withCredentials: true,

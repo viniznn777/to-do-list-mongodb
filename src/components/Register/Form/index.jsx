@@ -35,7 +35,7 @@ const Form = () => {
       </div>
       <div className="container-inputs">
         <label htmlFor="fname" className="fw-bold">
-          Primeiro Nome:
+          Nome:
         </label>
         <input
           type="text"
@@ -43,6 +43,7 @@ const Form = () => {
           id="fname"
           onChange={(e) => setFname(e.target.value)}
           value={fname}
+          placeholder="Nome e Sobrenome"
         />
       </div>
       <div className="container-inputs">
@@ -55,6 +56,7 @@ const Form = () => {
           id="email"
           onChange={(e) => setEmail(e.target.value)}
           value={email}
+          placeholder="Digite seu e-mail"
         />
       </div>
       <div className="container-inputs">
@@ -67,6 +69,7 @@ const Form = () => {
           id="password"
           onChange={(e) => setPassword(e.target.value)}
           value={password}
+          placeholder="Crie uma senha"
         />
       </div>
       <div className="container-inputs">
@@ -79,6 +82,7 @@ const Form = () => {
           id="password2"
           onChange={(e) => setPassword2(e.target.value)}
           value={password2}
+          placeholder="Confirme sua senha"
         />
       </div>
       <div className="container-button-submit">

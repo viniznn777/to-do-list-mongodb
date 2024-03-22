@@ -13,7 +13,7 @@ import Loader from "../../components/Loader";
 import { highlightText } from "../../utils/highlightText";
 
 const Home = () => {
-  const { logout } = useAuth();
+  const { logout, fname } = useAuth();
   const [data, setData] = useState([]);
   const [textStatus, setTextStatus] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -80,7 +80,7 @@ const Home = () => {
           />
         </div>
         <Link to={"/create_task"}>
-          <button>
+          <button title="Criar tarefa">
             <GoPlusCircle />
           </button>
         </Link>
@@ -88,7 +88,7 @@ const Home = () => {
           <GrLogout />
         </button>
         <Link to={"/profile"}>
-          <button>
+          <button title={`Perfil ${fname}`}>
             <FaUser />
           </button>
         </Link>

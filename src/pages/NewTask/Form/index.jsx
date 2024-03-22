@@ -29,6 +29,7 @@ const Form = () => {
           value={title}
           maxLength={36}
           className="fw-bold"
+          placeholder="Título da tarefa"
         />
       </div>
 
@@ -43,6 +44,7 @@ const Form = () => {
           onChange={(e) => setTask(e.target.value)}
           value={task}
           className="fw-bold"
+          placeholder="Descrição da tarefa"
         />
       </div>
 

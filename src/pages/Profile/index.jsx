@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Container } from "./styles";
 import { useAuth } from "../../hooks/useAuth";
 import { Link } from "react-router-dom";
-import { fetchData } from "./LoadInfoFunction";
+import { fetchEmail } from "./LoadInfoFunction";
 import { errorMessage } from "../../utils/toastifyMessages";
 import BackButton from "../../components/BackButton";
 
@@ -13,7 +13,7 @@ const Profile = () => {
   useEffect(() => {
     (async () => {
       try {
-        const data = await fetchData();
+        const data = await fetchEmail();
         setEmail(data.data);
       } catch (err) {
         console.log(err);
@@ -49,10 +49,10 @@ const Profile = () => {
           <Link>
             <button className="btn btn-primary mt-3">Redefinir Senha</button>
           </Link>
-          <Link>
+          <Link to={"/profile/change_email"}>
             <button className="btn btn-primary mt-3">Alterar Email</button>
           </Link>
-          <Link>
+          <Link to={"/profile/delete_acc"}>
             <button className="btn btn-outline-danger mt-3">
               Excluir Conta
             </button>
