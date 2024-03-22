@@ -21,4 +21,33 @@ router.get("/email", verifyToken, verifyUserId, async (req, res) => {
   }
 });
 
+router.post("/change/email", verifyToken, verifyUserId, async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    const existingEmail = await User.find({ email: email });
+
+    if (existingEmail) {
+      return res.status(409).json({ message: "Email is already in use!" });
+    }
+
+    const user = await User.findById(req.userId);
+
+    if (!user) {
+      return res.status(400).json({ message: "User not found!" });
+    }
+
+    await User.findByIdAndUpdate(
+      { _id: req.userId },
+      { email: email },
+      { new: true }
+    );
+
+    res.status(200).json({ message: "Email updated successfully!" });
+  } catch (err) {
+    console.error("Error updating user email:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 module.exports = router;

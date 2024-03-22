@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { FormContainer } from "./styles";
-import { Link } from "react-router-dom";
-import { IoReturnDownBackSharp } from "react-icons/io5";
+
 import { addTask } from "./AddTask";
+import BackButton from "../../../components/BackButton";
 
 const Form = () => {
   const [title, setTitle] = useState("");
@@ -48,9 +48,7 @@ const Form = () => {
 
       <div className="container-button-submit">
         <button>Criar tarefa</button>
-        <Link to={"/"}>
-          <IoReturnDownBackSharp />
-        </Link>
+        <BackButton where={"/"} />
       </div>
     </FormContainer>
   );

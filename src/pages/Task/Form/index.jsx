@@ -3,6 +3,7 @@ import { FormContainer } from "./styles";
 import { Link } from "react-router-dom";
 import { IoReturnDownBackSharp } from "react-icons/io5";
 import { handleEditForm, loadTask } from "./LoadAndEditTask";
+import BackButton from "../../../components/BackButton";
 
 const Form = ({ id }) => {
   const [title, setTitle] = useState("");
@@ -78,9 +79,7 @@ const Form = ({ id }) => {
 
       <div className="container-button-submit">
         <button>{textButton}</button>
-        <Link to={"/"}>
-          <IoReturnDownBackSharp />
-        </Link>
+        <BackButton where={"/"} />
       </div>
     </FormContainer>
   );

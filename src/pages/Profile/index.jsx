@@ -4,6 +4,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { Link } from "react-router-dom";
 import { fetchData } from "./LoadInfoFunction";
 import { errorMessage } from "../../utils/toastifyMessages";
+import BackButton from "../../components/BackButton";
 
 const Profile = () => {
   const { fname } = useAuth();
@@ -58,6 +59,7 @@ const Profile = () => {
           </Link>
         </div>
       </div>
+      <BackButton where={"/"} />
     </Container>
   );
 };
