@@ -46,7 +46,7 @@ const Profile = () => {
       <div className="profile-options">
         <p className="fs-2 fw-bold">Opções do Perfil</p>
         <div className="links">
-          <Link>
+          <Link to={"/profile/redefine_password"}>
             <button className="btn btn-primary mt-3">Redefinir Senha</button>
           </Link>
           <Link to={"/profile/change_email"}>

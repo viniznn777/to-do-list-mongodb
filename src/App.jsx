@@ -14,6 +14,7 @@ import Task from "./pages/Task";
 import Profile from "./pages/Profile";
 import RedefineEmail from "./pages/Profile/pages/RedefineEmail";
 import DeleteAccount from "./pages/Profile/pages/DeleteAccount";
+import RedefinePassword from "./pages/Profile/pages/RedefinePassword";
 
 let messageLogged = false;
 
@@ -59,6 +60,10 @@ function App() {
           <Route
             path="/profile/delete_acc"
             element={<PrivateRoute item={<DeleteAccount />} />}
+          ></Route>
+          <Route
+            path="/profile/redefine_password"
+            element={<PrivateRoute item={<RedefinePassword />} />}
           ></Route>
         </Routes>
       </AuthProvider>

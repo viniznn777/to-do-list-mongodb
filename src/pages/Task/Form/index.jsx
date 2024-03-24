@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FormContainer } from "./styles";
-import { Link } from "react-router-dom";
-import { IoReturnDownBackSharp } from "react-icons/io5";
 import { handleEditForm, loadTask } from "./LoadAndEditTask";
 import BackButton from "../../../components/BackButton";
 

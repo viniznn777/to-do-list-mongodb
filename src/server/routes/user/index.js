@@ -83,4 +83,46 @@ router.post("/delete_acc", verifyToken, verifyUserId, async (req, res) => {
   }
 });
 
+router.post(
+  "/redefine_password",
+  verifyToken,
+  verifyUserId,
+  async (req, res) => {
+    try {
+      const { oldPassword, newPassword } = req.body;
+
+      const user = await User.findOne({ _id: req.userId });
+
+      if (!user) {
+        return res
+          .status(404)
+          .json({ message: "Unable to find your account in the database!" });
+      }
+
+      const isValidPassword = await bcrypt.compare(oldPassword, user.password);
+
+      if (!isValidPassword) {
+        return res.status(400).json({ message: "Incorrect Password!" });
+      }
+
+      const salt = await bcrypt.genSalt(10);
+
+      const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+      await User.findOneAndUpdate(
+        { _id: req.userId },
+        { password: hashedPassword },
+        { new: true }
+      );
+
+      res
+        .status(200)
+        .json({ message: "Your password has been changed successfully!" });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({ error: "Internal error" });
+    }
+  }
+);
+
 module.exports = router;
